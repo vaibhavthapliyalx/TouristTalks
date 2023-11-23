@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Logo</span>
+    <span class="spacer"></span>
+    <button mat-button [matMenuTriggerFor]="menu">Profile</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>

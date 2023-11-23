@@ -1,38 +1,46 @@
 {
-  "name": "angular",
-  "version": "0.0.0",
+  "name": "tourist_talks",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "e2e": "ng e2e",
+    "dev": "concurrently \"ng serve --port 3000\" \"cd api && FLASK_APP=index.py flask run\""
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.2.0",
-    "@angular/common": "^16.2.0",
-    "@angular/compiler": "^16.2.0",
-    "@angular/core": "^16.2.0",
-    "@angular/forms": "^16.2.0",
-    "@angular/platform-browser": "^16.2.0",
-    "@angular/platform-browser-dynamic": "^16.2.0",
-    "@angular/router": "^16.2.0",
+    "@angular/animations": "^13.4.0",
+    "@angular/cdk": "^13.3.9",
+    "@angular/cli": "^13.3.11",
+    "@angular/common": "^13.4.0",
+    "@angular/compiler": "^13.4.0",
+    "@angular/core": "^13.4.0",
+    "@angular/forms": "^13.4.0",
+    "@angular/material": "^13.3.9",
+    "@angular/platform-browser": "^13.4.0",
+    "@angular/platform-browser-dynamic": "^13.4.0",
+    "@angular/router": "^13.4.0",
+    "bootstrap": "^5.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.9",
-    "@angular/cli": "^16.2.9",
     "@angular/compiler-cli": "^16.2.0",
     "@types/jasmine": "~4.3.0",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.4.31",
     "typescript": "~5.1.3"
   }
 }
