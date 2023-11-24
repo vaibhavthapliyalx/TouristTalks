@@ -1,0 +1,14 @@
+.status-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .status-dot.success {
+    background-color: #28a745;
+  }
+  
+  .status-dot.danger {
+    background-color: #dc3545;
+  }
