@@ -1,3 +1,38 @@
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  text-decoration-color:black;
+}
+
+.mat-toolbar button {
+  margin-right: 10px;
+}
+
+.mat-toolbar a {
+  color: #333;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+.mat-toolbar a.active {
+  color: #ff4013;
+  border-bottom: 2px solid #ff4013;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+.logo {
+    width: 170px;
+    height: 60px;
+}
+
 .spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}

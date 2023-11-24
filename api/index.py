@@ -1,5 +1,9 @@
+import datetime
+from functools import wraps
+import bcrypt
 from flask import Flask, make_response, request, jsonify
 from flask_cors import CORS
+import jwt
 from pymongo import MongoClient
 from bson import ObjectId
 from werkzeug.utils import secure_filename
@@ -19,15 +23,12 @@ db = client['TouristTalks']
 places_collection = db['Places']
 reviews_collection = db['Reviews']
 users_collection = db['Users']
+blacklist = db['blacklist']
+app.config['SECRET_KEY'] = 'secret_key'
 
 # Configure file upload settings
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-
-# Configure login settings
-app.secret_key = 'supersecretkey'
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 # User model
 class User(UserMixin):
@@ -45,19 +46,28 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-@login_manager.user_loader
-def load_user(user_id):
-    user = users_collection.find_one({"_id": ObjectId(user_id)})
-    if user:
-        return User(user)
-    else:
-        return None
+# JWT Authentication, A decorator to check for a valid token
+def jwt_required(func):
+    @wraps(func)
+    def jwt_required_wrapper(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return jsonify({'message': 'Token is missing'}), 401
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        except Exception as e:
+            return jsonify({'message': 'Token is invalid', 'error': str(e)}), 401
+        return func(*args, **kwargs)
+    return jwt_required_wrapper
+
 
 # API Endpoints
 
 @app.route('/api/db_connectivity', methods=['GET'])
 def databaseStats():
-    return client.admin.command('ping')
+    return client.user.command('ping')
 
 @app.route('/api/server_connectivity', methods=['GET'])
 def serverStats():
@@ -128,51 +138,120 @@ def upload_profile_photo():
         return jsonify({'error': 'Invalid file type'}), 400
 
 # Add a new place
-@app.route('/api/places', methods=['POST'])
+@app.route('/api/add-place', methods=['POST'])
 @login_required
 def add_place():
     data = request.json
     place_id = places_collection.insert_one(data).inserted_id
     return jsonify({'message': 'Place added successfully', 'place_id': str(place_id)})
 
-# Login
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.json
-    username = data['username']
-    password = data['password']
+#User signup (POST) operation
 
-    user = users_collection.find_one({"username": username})
-
-    if user and User(user).check_password(password):
-        login_user(User(user))
-        return jsonify({'message': 'Login successful'})
-    else:
-        return jsonify({'error': 'Invalid username or password'}), 401
-
-# Logout
-@app.route('/api/logout', methods=['POST'])
-@login_required
-def logout():
-    logout_user()
-    return jsonify({'message': 'Logout successful'})
-
-# Signup
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    data = request.json
-    username = data['username']
-    password = data['password']
+    data = request.get_json()
+    username = data.get('username')
+    fullname = data.get('fullname')
+    password = data.get('password')
+    email = data.get('email')
+    profile_photo = data.get('profile_photo')
+    print("username: ", username)
+    print("password: ", password)
 
-    if users_collection.find_one({"username": username}):
-        return jsonify({'error': 'Username already exists'}), 400
+    # Check if the username is already taken
+    if users_collection.find_one({'email': email}):
+        return jsonify({'message': 'An account is already registered with this email. Please log in instead.'}), 400
 
-    password_hash = generate_password_hash(password)
-    user_id = users_collection.insert_one({"username": username, "password_hash": password_hash}).inserted_id
+    if not password:
+        return jsonify({'message': 'Password is required.'}), 400
 
-    login_user(User(users_collection.find_one({"_id": user_id})))
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    return jsonify({'message': 'Signup successful'})
+    # Create a new user in users collection
+    new_user = {
+        'fullname': fullname,
+        'username': username,
+        'password': hashed_password.decode('utf-8'),
+        'email': email,
+        'profile_photo': profile_photo
+    }
+    result = users_collection.insert_one(new_user)
+    return jsonify({'message': 'user created successfully!', 'user_id': str(result.inserted_id)}, 201)
+
+
+# User login (POST) operation
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    user = users_collection.find_one({'username': username})
+    if user is None:
+        user = users_collection.find_one({'email': username})
+
+    if user is not None:
+        if bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+
+            token = jwt.encode({
+                'id': str(user['_id']),  # Convert ObjectId to string
+                'user': user['username'],
+                'iat': datetime.datetime.utcnow(),
+                'exp': datetime.datetime.utcnow() + datetime. timedelta(hours=24)
+            }, app.config['SECRET_KEY'])
+            return make_response(jsonify({'token': token}), 200)
+        else:
+            return make_response(jsonify({'message': 'Password is incorrect'}), 401)
+    else:
+        return make_response(jsonify({'message': 'Username or email not found. Please check your credentials or sign up to create a new account.'}), 401)
+    
+
+# User logout operation
+@app.route('/api/logout', methods=['GET'])
+@jwt_required
+def logout():
+    token = request.headers['x-access-token']
+    blacklist.insert_one({"token": token})
+    return jsonify({'message': 'Logout successful'})
+
+# @app.route('/api/validate-token', methods=['GET'])
+# @jwt_required
+# def validate_token():
+#     token = request.headers['x-access-token']
+#     if blacklist.find_one({"token": token}):
+#         return make_response(jsonify({'message': 'Invalid token'}), 401)
+#     else:
+#         return make_response(jsonify({'message': 'Valid token'}), 200)
+
+@app.route('/api/logged-in-user', methods=['GET'])
+@jwt_required
+def get_logged_in_user():
+    try:
+        token = request.headers.get('x-access-token')  #    Get the token from the headers
+
+        # Decode the token and get the user_id
+        data = jwt.decode(token, app.config ['SECRET_KEY'], algorithms=["HS256"])
+        user_id = data['id']
+
+        # Fetch the user data from your database
+        user = users_collection.find_one({'_id':  ObjectId(user_id)})
+
+        if user:
+            # If the user exists, return their data
+            return jsonify({
+                'id': str(user['_id']),  # Convert ObjectId to string
+                'fullname': user['fullname'],
+                'username': user['username'],
+                'password': user['password'],
+                'email': user['email'],
+                'profile_photo': user['profile_photo'],
+            }), 200
+        else:
+            # If the user does not exist, return an     error
+            return jsonify({'message': 'user not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

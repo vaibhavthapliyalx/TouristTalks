@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+    height: 500px; /* Adjust as needed */
+  }
+  
+  .signup-card {
+    width: 50%; /* Adjust as needed */
+    max-width: 800px; /* Adjust as needed */
+    padding: 20px; /* Adjust as needed */
+    text-align: center; /* Center the contents */
+    background-color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .logo-container {
+    text-align: center; /* Center the logo */
+  }
+  
+  .logo {
+    width: 200px; /* Adjust as needed */
+    height: 90px;
+  }
+  
+  .form-content {
+    width: 100%;
+  }
+  
+  .form-group {
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  h2 {
+    margin-left: 200px;
+  }

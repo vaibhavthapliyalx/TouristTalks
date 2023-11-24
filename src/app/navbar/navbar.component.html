@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Logo</span>
+    <img src="../../assets/logo.png" class="logo">
     <span class="spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu">Profile</button>
+    <a mat-button *ngFor="let item of navigation" [routerLink]="item.href" [routerLinkActive]="['active']" [routerLinkActiveOptions]="item.href === '/' ? {exact: true} : {exact: false}">{{item.name}}</a>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <img [src]="getProfilePhotoUri()" class="avatar">
+      {{user?.username}}
+    </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onLogout()">Logout</button>
+      <button mat-menu-item *ngIf="user" (click)="onLogout()">Logout</button>
+      <button mat-menu-item *ngIf="!user" routerLink="/login">Login</button>
     </mat-menu>
-  </mat-toolbar>
+</mat-toolbar>
