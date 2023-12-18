@@ -1,22 +1,30 @@
 import { Component } from '@angular/core';
-import CoreConnector from '../InterfaceAPI/CoreConnector';
+import ApiConnector from '../APIConnector/ApiConnector';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
+
+/**
+ * The footer component.
+ */
 export class FooterComponent {
   isDatabaseConnected: boolean;
   isServerConnected: boolean;
-  constructor(private coreConnector: CoreConnector) {
+
+  constructor(private apiConnector: ApiConnector) {
     this.isDatabaseConnected = false;
     this.isServerConnected = false;
     console.log("Footer Component initialized");
    }
 
+   /**
+    * Get the database and server connection status.
+    */
    ngOnInit() {
-    this.coreConnector.getDatabaseConnectionStatus()
+    this.apiConnector.getDatabaseConnectionStatus()
     .then((res:any) => {
       if (res.ok){
         this.isDatabaseConnected = true;
@@ -26,7 +34,7 @@ export class FooterComponent {
       this.isDatabaseConnected = false;
       console.log(err);
     });
-    this.coreConnector.getServerConnectionStatus()
+    this.apiConnector.getServerConnectionStatus()
     .then((res:any) => {
       this.isServerConnected = true;
     })

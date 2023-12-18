@@ -3,14 +3,14 @@
   margin-top: 100px;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 500px; /* Adjust as needed */
 }
 
-.signup-card {
-  width: 50%;
-  max-width: 800px;
-  padding: 20px;
-  text-align: center;
+.signin-card {
+  width: 50%; /* Adjust as needed */
+  max-width: 800px; /* Adjust as needed */
+  padding: 20px; /* Adjust as needed */
+  text-align: center; /* Center the contents */
   background-color: white;
   box-shadow: 0 2px 4px 0 #ff7f50;
   border: 1px solid #ff7f30;
@@ -37,7 +37,7 @@ mat-form-field {
   width: 100%;
 }
 h2 {
-  margin-left: 160px;
+  margin-left: 135px;
   font-size: xx-large;
 }
 .error-message {
@@ -50,5 +50,4 @@ h2 {
 .error-message mat-icon {
   width: 35px;
   height: 35px;
-  margin-top: 10px;
 }

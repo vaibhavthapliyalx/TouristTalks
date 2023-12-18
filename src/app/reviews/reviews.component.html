@@ -1,0 +1,140 @@
+<mat-progress-bar  mode="indeterminate" color="warn" *ngIf="isLoading"/>
+<div class="reviews-container" *ngIf="reviews.length > 0; else noReviews">
+  <h1 *ngIf="place_id" class="review-heading">Showing {{reviews.length}} {{reviews.length > 1 ? 'reviews': 'review' }} for {{ place_name }}</h1>
+  <h1 *ngIf="!place_id" class="review-heading">Showing {{reviews.length}} {{reviews.length > 1 ? 'reviews': 'review' }} by latest order in database</h1>  
+  <mat-card *ngFor="let review of reviews" class="review-card">
+      <div class="review-header">
+        <img class="reviewer-photo" [src]="'../../assets/'+ review.user?.profilePhoto" alt="Reviewer Photo">
+        <div>
+          <mat-card-title>
+            {{ review.user?.id === reviewer.id ? 'You' : review.user?.fullName }}
+            <span  *ngIf="!review.place_id || !place_id">reviewed <mat-icon class="reviewed-text">location_on</mat-icon>
+              <span class="reviewed-text">{{ review.place_name }}</span></span>
+             
+          </mat-card-title>
+          <button mat-button *ngIf="!place_id || !review.place_id" [routerLink]="['/places/reviews', review.place_id, review.place_name]" (click)="$event.stopPropagation()">
+            <mat-icon>rate_review</mat-icon> See all reviews for {{ review.place_name }}?
+          </button>
+          <div class="rating">
+            <mat-icon class="star" *ngFor="let star of getStars(review.rating)">
+              {{ star === 1 ? 'star' : star === 0.5 ? 'star_half' : 'star_border' }}
+            </mat-icon>
+            <span>{{review.rating | number:'1.1-1'}}</span>
+            <mat-card-actions class="reviews-button">
+            </mat-card-actions>
+          </div>
+          <mat-card-subtitle>
+           Reviewed on  {{ review.timestamp | date:'MMM d, y' }} at {{ review.timestamp | date:'h:mm a' }} 
+          </mat-card-subtitle>
+          <span class="badge" *ngIf="review.edited">Edited</span>
+        </div>
+      </div>
+      <mat-card-content>
+        <p>{{ review.text }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="toggleLike(review)">
+          <mat-icon [style.color]="review.liked ? 'red' : 'black'">favorite</mat-icon>
+          ({{ review.likes }})
+        </button>
+        <button mat-button *ngIf="reviewer.id === review.user?.id" (click)="editReview(review)">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+        <button mat-button *ngIf="reviewer.id === review.user?.id || reviewer.role === 'admin'" (click)="deleteReview(review.review_id ?? '')">
+          <mat-icon>delete</mat-icon>
+          Delete
+        </button>
+      </mat-card-actions>
+      <mat-card *ngIf="showReviewForm && editingReviewId=== review.review_id" class="review-card">
+        <form [formGroup]="reviewForm" class="review-form">
+          <mat-card-content>
+            <mat-form-field class="full-width">
+              <textarea matInput [placeholder]="'Posting review as ' + reviewer.fullName" formControlName="text"></textarea>
+            </mat-form-field>
+      
+            <mat-form-field class="full-width">
+              <mat-label>Rating in stars</mat-label>
+              <mat-select formControlName="rating">
+                <mat-option *ngFor="let star of [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]" [value]="star">
+                  {{star}} Star{{star > 1 ? 's' : ''}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+      
+          <mat-card-actions>
+            <button type="button" mat-icon-button color="primary" (click)="addReview()" [disabled]="!reviewForm.valid">
+              <mat-icon>check</mat-icon>
+            </button>
+            <mat-icon class="close-icon" (click)="showReviewForm = false">close</mat-icon>
+          </mat-card-actions>
+        </form>
+      </mat-card>
+    </mat-card>
+    <button *ngIf="place_id" mat-fab (click)="showForm()" class="add-review-button">
+      <mat-icon>add</mat-icon>
+    </button>
+    <mat-card *ngIf="showReviewForm && !editingReviewId" class="review-card">
+        <form [formGroup]="reviewForm" class="review-form">
+          <mat-card-content>
+            <mat-form-field class="full-width">
+              <textarea matInput [placeholder]="'Posting review as ' + reviewer.fullName" formControlName="text"></textarea>
+            </mat-form-field>
+      
+            <mat-form-field class="full-width">
+              <mat-label>Rating in stars</mat-label>
+              <mat-select formControlName="rating">
+                <mat-option *ngFor="let star of [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]" [value]="star">
+                  {{star}} Star{{star > 1 ? 's' : ''}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions>
+            <button type="button" mat-icon-button class="add-review-button" (click)="addReview()" [disabled]="!reviewForm.valid">
+              <mat-icon>check</mat-icon>
+            </button>
+            <mat-icon class="close-icon" (click)="showReviewForm = false">close</mat-icon>
+          </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+  
+  <ng-template #noReviews>
+    <div class="center-content">
+      <p class="message">Unfortunately, there are currently no reviews available for this location. 😞<br>
+      We would greatly appreciate your contribution. Please click on the (+) icon below to add your review.</p>
+        
+      <button mat-fab (click)="showForm()" class="add-review-button">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-card *ngIf="showReviewForm" class="review-card">
+      <form [formGroup]="reviewForm" class="review-form">
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <textarea matInput [placeholder]="'Posting review as ' + reviewer.fullName" formControlName="text"></textarea>
+          </mat-form-field>
+    
+          <mat-form-field class="full-width">
+            <mat-label>Rating in stars</mat-label>
+            <mat-select formControlName="rating">
+              <mat-option *ngFor="let star of [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]" [value]="star">
+                {{star}} Star{{star > 1 ? 's' : ''}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+    
+        <mat-card-actions>
+          <button type="button" mat-icon-button  (click)="addReview()" [disabled]="!reviewForm.valid">
+            <mat-icon>check</mat-icon>
+          </button>
+          <mat-icon class="close-icon" (click)="showReviewForm = false">close</mat-icon>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+  </ng-template>
+  
+  

@@ -1,0 +1,80 @@
+<mat-progress-bar  mode="indeterminate" color="warn" *ngIf="isLoading"/>
+<div class="container" *ngIf="user && !isLoading">
+    <mat-card class="mat-elevation-z5 profile-card">
+      <div class="card-header">
+        <img mat-card-avatar [src]="'../assets/'+ user.profilePhoto" alt="Profile photo" class="profile-photo">
+        <div>
+          <h1>{{ user.fullName }}</h1>
+          <h3>@{{ user.username }}</h3>
+        </div>
+      </div>
+      <mat-card-content>
+        <p><mat-icon>person</mat-icon> Role: {{ user.role }}</p>
+        <p><mat-icon>email</mat-icon> {{ user.email }}</p>
+        <p><mat-icon>thumb_up</mat-icon> Liked Reviews: {{ user.likedReviews?.length || 0 }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="editProfile = !editProfile">Edit Profile</button>
+        <button mat-stroked-button (click)="changePassword = !changePassword">Change Password</button>
+        <button mat-stroked-button color="warn" (click)="deleteAccount()">Delete My Account</button>
+      </mat-card-actions>
+      <mat-card-content *ngIf="editProfile">
+        <mat-form-field appearance="fill">
+          <mat-label>Full Name</mat-label>
+          <input matInput [(ngModel)]="user.fullName">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="user.username">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="user.email">
+        </mat-form-field>
+        <div *ngIf="errorMessage" class="error-message">
+            <mat-icon>error</mat-icon>
+            {{ errorMessage }}
+        </div>
+        <button mat-raised-button
+                [style.color]="isSubmitting ? '' : 'white'"
+                [style.background-color]="isSubmitting ? 'lightgreen' : '#f44336'" 
+                (click)="saveProfile()" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Save</span>
+          <span *ngIf="isSubmitting">Saving...</span>
+        </button>
+      </mat-card-content>
+      <mat-card-content *ngIf="changePassword" class="form">
+        <mat-form-field appearance="fill">
+          <mat-label>Current Password</mat-label>
+          <input matInput type="password" [(ngModel)]="currentPassword">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>New Password</mat-label>
+          <input matInput type="password" [(ngModel)]="newPassword">
+        </mat-form-field>
+        <div *ngIf="errorMessage" class="error-message">
+            <mat-icon>error</mat-icon>
+            {{ errorMessage }}
+        </div>
+        <button mat-raised-button 
+                [style.color]="isVerifying ? '' : 'white'"
+                [style.background-color]="isVerifying ? 'lightgreen' : '#f44336'" 
+                (click)="verifyAndChangePassword()" [disabled]="isVerifying">
+          <span *ngIf="!isVerifying">Save</span>
+          <span *ngIf="isVerifying">Verifying...</span>
+        </button>
+      </mat-card-content>
+    
+      
+    </mat-card>
+    <mat-tab-group color="warn" class="tabs">
+      <mat-tab label="My Reviews"> 
+      <app-user-reviews [userId]="user.id ?? ''" [reviewType]="'myReviews'" ></app-user-reviews>
+      </mat-tab>
+      <mat-tab label="Liked Reviews">
+        <app-user-reviews [userId]="user.id ?? ''" [reviewType]="'likedReviews'"></app-user-reviews>
+      </mat-tab>
+    </mat-tab-group>
+    
+      
+  </div>

@@ -1,0 +1,1163 @@
+{
+	"id": "05def003-6f41-4013-9788-bda2cc5ceb8b",
+	"name": "TouristTalksApp",
+	"timestamp": "2023-12-18T00:34:27.726Z",
+	"collection_id": "30462678-3ecc543b-9f9f-4408-94ae-6fb5ee7d6b95",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 86,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-12-18T00:34:23.807Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "b3e81d93-e944-47df-b91c-ee0a82ba84b1",
+			"name": "DB Connection Status",
+			"url": "http://localhost:3000/api/db_connectivity",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Database connection status is OK": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Database connection status is OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Database connection status is OK": true
+				}
+			]
+		},
+		{
+			"id": "c0dc2409-dce4-4e54-9a1f-ada621f20ef8",
+			"name": "Server Connection Status",
+			"url": "http://localhost:3000/api/server_connectivity",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Server connection status is OK": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Server connection status is OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Server connection status is OK": true
+				}
+			]
+		},
+		{
+			"id": "0eade54f-1054-469f-b9b2-af45f5075ed7",
+			"name": "User (Admin) Signup",
+			"url": "http://localhost:3000/api/signup",
+			"time": 480,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Response status code is 201": true,
+				"Message is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				480
+			],
+			"allTests": [
+				{
+					"Response status code is 201": true,
+					"Message is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "a09da287-941a-4e5a-8360-010d3ab9781e",
+			"name": "Login",
+			"url": "http://localhost:3000/api/login",
+			"time": 295,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required field 'token'": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required field 'token'": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				295
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required field 'token'": true
+				}
+			]
+		},
+		{
+			"id": "326ac8cd-681c-48f1-817b-fc3c41d02ac4",
+			"name": "Get logged in user",
+			"url": "http://localhost:3000/api/logged-in-user",
+			"time": 162,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Email is a non-empty string and in a valid email format": true,
+				"User ID is a non-empty string": true,
+				"Liked_reviews and places are arrays": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is a non-empty string and in a valid email format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"User ID is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Liked_reviews and places are arrays": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				162
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Email is a non-empty string and in a valid email format": true,
+					"User ID is a non-empty string": true,
+					"Liked_reviews and places are arrays": true
+				}
+			]
+		},
+		{
+			"id": "1122cca6-e3b1-45c3-ad3c-d94721411d1f",
+			"name": "Add place",
+			"url": "http://localhost:3000/api/add-place",
+			"time": 135,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Response has the required fields - message and place_id": true,
+				"Place_id is a non-negative integer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields - message and place_id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Place_id is a non-negative integer": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				135
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Response has the required fields - message and place_id": true,
+					"Place_id is a non-negative integer": true
+				}
+			]
+		},
+		{
+			"id": "ad2ee176-f3f3-412b-8a6a-d0f6d6bb8371",
+			"name": "Add Review",
+			"url": "http://localhost:3000/api/add-review",
+			"time": 91,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Response status code is 201": true,
+				"Response has the required fields": true,
+				"Message is not empty": true,
+				"Content-Type header is application/json": true,
+				"Response time is less than 500ms": true,
+				"Message is a non-empty string": true,
+				"Response body is an object": true,
+				"Content-Type header is present in the response": true,
+				"Message field should be a string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is not empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 500ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is an object": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field should be a string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Response status code is 201": true,
+					"Response has the required fields": true,
+					"Message is not empty": true,
+					"Content-Type header is application/json": true,
+					"Response time is less than 500ms": true,
+					"Message is a non-empty string": true,
+					"Response body is an object": true,
+					"Content-Type header is present in the response": true,
+					"Message field should be a string": true
+				}
+			]
+		},
+		{
+			"id": "88a275f7-472b-4560-9350-4a41f42f7545",
+			"name": "Get all places",
+			"url": "http://localhost:3000/api/places",
+			"time": 304,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Address fields should exist": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Address fields should exist": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				304
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Address fields should exist": true
+				}
+			]
+		},
+		{
+			"id": "4efe3db5-99fa-4c30-b37b-11d1298ae83a",
+			"name": "Get all reviews",
+			"url": "http://localhost:3000/api/reviews",
+			"time": 54,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Likes is a non-negative integer": true,
+				"Place_id is a non-empty number": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Likes is a non-negative integer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Place_id is a non-empty number": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				54
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Likes is a non-negative integer": true,
+					"Place_id is a non-empty number": true
+				}
+			]
+		},
+		{
+			"id": "72ec5c35-2720-45a7-8bbc-1cf564fc4baf",
+			"name": "Get reviews for a user",
+			"url": "http://localhost:3000/api/myreviews/u134502",
+			"time": 39,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				39
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "5f100276-6c50-4f02-a965-bb5baf836871",
+			"name": "Get reviews liked by user",
+			"url": "http://localhost:3000/api/liked-reviews/u134502",
+			"time": 74,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Likes field is a non-negative integer": true,
+				"Verify that the 'timestamp' is in a valid date format": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Likes field is a non-negative integer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify that the 'timestamp' is in a valid date format": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				74
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Likes field is a non-negative integer": true,
+					"Verify that the 'timestamp' is in a valid date format": true
+				}
+			]
+		},
+		{
+			"id": "ce556622-8225-426b-a772-29afd397db73",
+			"name": "Get reviews for a place",
+			"url": "http://localhost:3000/api/places/972378/reviews",
+			"time": 39,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				39
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "e3998eb4-e331-476b-85c0-642e102939f8",
+			"name": "Get user by user ID",
+			"url": "http://localhost:3000/api/users/u134502",
+			"time": 121,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Email is in a valid email format": true,
+				"Username is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid email format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				121
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Email is in a valid email format": true,
+					"Username is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "d1165413-2a65-47d5-b179-6b3bce11b7b2",
+			"name": "Get place by place ID",
+			"url": "http://localhost:3000/api/place/972378",
+			"time": 38,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Phone number is in a valid format": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Phone number is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Phone number is in a valid format": true
+				}
+			]
+		},
+		{
+			"id": "7e1a7347-28d7-472b-b536-5d302e823c1c",
+			"name": "Get review by review ID",
+			"url": "http://localhost:3000/api/reviews/r871531",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "e820438c-5e5a-45cf-adf7-8c02752f3ebc",
+			"name": "Get reviews with user details",
+			"url": "http://localhost:3000/api/places/972378/reviews-with-user-details",
+			"time": 39,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				39
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a5792d4d-ace6-436a-9bdf-b8f564a81900",
+			"name": "Update Review",
+			"url": "http://localhost:3000/api/update-review",
+			"time": 45,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Response status code is 201": true,
+				"Response has the required fields": true,
+				"Message is not empty": true,
+				"Content-Type header is application/json": true,
+				"Response time is less than 500ms": true,
+				"Message is a non-empty string": true,
+				"Response body is an object": true,
+				"Content-Type header is present in the response": true,
+				"Message field should be a string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is not empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 500ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is an object": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field should be a string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				45
+			],
+			"allTests": [
+				{
+					"Response status code is 201": true,
+					"Response has the required fields": true,
+					"Message is not empty": true,
+					"Content-Type header is application/json": true,
+					"Response time is less than 500ms": true,
+					"Message is a non-empty string": true,
+					"Response body is an object": true,
+					"Content-Type header is present in the response": true,
+					"Message field should be a string": true
+				}
+			]
+		},
+		{
+			"id": "7c3501bb-3b2b-401b-83b7-6333122b3030",
+			"name": "Like Review",
+			"url": "http://localhost:3000/api/user-review-feedback",
+			"time": 110,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Message is a non-empty string": true,
+				"Message field is of type string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is of type string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				110
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Message is a non-empty string": true,
+					"Message field is of type string": true
+				}
+			]
+		},
+		{
+			"id": "66cc8e8c-7354-4adc-a164-5a09b332fac6",
+			"name": "Unlike Review",
+			"url": "http://localhost:3000/api/user-review-feedback",
+			"time": 172,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Message is a non-empty string": true,
+				"Message field is of type string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is of type string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				172
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Message is a non-empty string": true,
+					"Message field is of type string": true
+				}
+			]
+		},
+		{
+			"id": "a4adf52a-08d3-47ae-85aa-f6a1cb71d2fd",
+			"name": "Delete review",
+			"url": "http://localhost:3000/api/delete-review/r871531",
+			"time": 44,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Content-Type header is application/json": true,
+				"Message is present in the response": true,
+				"Message is a non-empty string": true,
+				"Verify that the review with review_id is successfully deleted": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify that the review with review_id is successfully deleted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				44
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Message is present in the response": true,
+					"Message is a non-empty string": true,
+					"Verify that the review with review_id is successfully deleted": true
+				}
+			]
+		},
+		{
+			"id": "024aa40f-f2be-40cf-94f7-b559f2a42caf",
+			"name": "Delete place",
+			"url": "http://localhost:3000/api/delete-place/972378",
+			"time": 76,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Content-Type header is application/json": true,
+				"Message is present in the response": true,
+				"Message is a non-empty string": true,
+				"Verify that the review with review_id is successfully deleted": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify that the review with review_id is successfully deleted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				76
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Message is present in the response": true,
+					"Message is a non-empty string": true,
+					"Verify that the review with review_id is successfully deleted": true
+				}
+			]
+		},
+		{
+			"id": "f80ef6c4-4c28-4dc4-a369-d7c8e48cb8a7",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/logout",
+			"time": 48,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required Content-Type header with value application/json": true,
+				"Message field is present in the response": true,
+				"Message field is a non-empty string": true,
+				"Response body does not contain sensitive information": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required Content-Type header with value application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body does not contain sensitive information": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				48
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required Content-Type header with value application/json": true,
+					"Message field is present in the response": true,
+					"Message field is a non-empty string": true,
+					"Response body does not contain sensitive information": true
+				}
+			]
+		},
+		{
+			"id": "952c4a30-8e60-4d5e-82aa-e3b788c39efc",
+			"name": "Update user profile",
+			"url": "http://localhost:3000/api/update-user-profile",
+			"time": 72,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Message is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				72
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Message is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "7e5c131f-541a-4f5c-bf60-ce9d52d78ff1",
+			"name": "Change user password",
+			"url": "http://localhost:3000/api/change-password",
+			"time": 743,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Content-Type header is application/json": true,
+				"Message field is present in the response": true,
+				"Message is a non-empty string": true,
+				"Message is descriptive and user-friendly": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message is descriptive and user-friendly": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				743
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Message field is present in the response": true,
+					"Message is a non-empty string": true,
+					"Message is descriptive and user-friendly": true
+				}
+			]
+		},
+		{
+			"id": "2ead0287-9de0-4d91-a278-02338b7b5a11",
+			"name": "Delete user account",
+			"url": "http://localhost:3000/api/delete-user-account/u134502",
+			"time": 79,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Message field is present in the response": true,
+				"Message field should not be empty": true,
+				"Verify user account is successfully deleted and no longer accessible": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Message field should not be empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify user account is successfully deleted and no longer accessible": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				79
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Message field is present in the response": true,
+					"Message field should not be empty": true,
+					"Verify user account is successfully deleted and no longer accessible": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 3345,
+	"collection": {
+		"requests": [
+			{
+				"id": "b3e81d93-e944-47df-b91c-ee0a82ba84b1",
+				"method": "GET"
+			},
+			{
+				"id": "c0dc2409-dce4-4e54-9a1f-ada621f20ef8",
+				"method": "GET"
+			},
+			{
+				"id": "0eade54f-1054-469f-b9b2-af45f5075ed7",
+				"method": "POST"
+			},
+			{
+				"id": "a09da287-941a-4e5a-8360-010d3ab9781e",
+				"method": "POST"
+			},
+			{
+				"id": "326ac8cd-681c-48f1-817b-fc3c41d02ac4",
+				"method": "GET"
+			},
+			{
+				"id": "1122cca6-e3b1-45c3-ad3c-d94721411d1f",
+				"method": "POST"
+			},
+			{
+				"id": "ad2ee176-f3f3-412b-8a6a-d0f6d6bb8371",
+				"method": "POST"
+			},
+			{
+				"id": "88a275f7-472b-4560-9350-4a41f42f7545",
+				"method": "GET"
+			},
+			{
+				"id": "4efe3db5-99fa-4c30-b37b-11d1298ae83a",
+				"method": "GET"
+			},
+			{
+				"id": "72ec5c35-2720-45a7-8bbc-1cf564fc4baf",
+				"method": "GET"
+			},
+			{
+				"id": "5f100276-6c50-4f02-a965-bb5baf836871",
+				"method": "GET"
+			},
+			{
+				"id": "ce556622-8225-426b-a772-29afd397db73",
+				"method": "GET"
+			},
+			{
+				"id": "e3998eb4-e331-476b-85c0-642e102939f8",
+				"method": "GET"
+			},
+			{
+				"id": "d1165413-2a65-47d5-b179-6b3bce11b7b2",
+				"method": "GET"
+			},
+			{
+				"id": "7e1a7347-28d7-472b-b536-5d302e823c1c",
+				"method": "GET"
+			},
+			{
+				"id": "e820438c-5e5a-45cf-adf7-8c02752f3ebc",
+				"method": "GET"
+			},
+			{
+				"id": "a5792d4d-ace6-436a-9bdf-b8f564a81900",
+				"method": "PUT"
+			},
+			{
+				"id": "7c3501bb-3b2b-401b-83b7-6333122b3030",
+				"method": "PUT"
+			},
+			{
+				"id": "66cc8e8c-7354-4adc-a164-5a09b332fac6",
+				"method": "PUT"
+			},
+			{
+				"id": "a4adf52a-08d3-47ae-85aa-f6a1cb71d2fd",
+				"method": "DELETE"
+			},
+			{
+				"id": "024aa40f-f2be-40cf-94f7-b559f2a42caf",
+				"method": "DELETE"
+			},
+			{
+				"id": "f80ef6c4-4c28-4dc4-a369-d7c8e48cb8a7",
+				"method": "GET"
+			},
+			{
+				"id": "952c4a30-8e60-4d5e-82aa-e3b788c39efc",
+				"method": "PUT"
+			},
+			{
+				"id": "7e5c131f-541a-4f5c-bf60-ce9d52d78ff1",
+				"method": "PUT"
+			},
+			{
+				"id": "2ead0287-9de0-4d91-a278-02338b7b5a11",
+				"method": "DELETE"
+			}
+		]
+	}
+}

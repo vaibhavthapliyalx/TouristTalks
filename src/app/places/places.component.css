@@ -1,0 +1,194 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px; 
+}
+.paginator-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.paginator-container button.active {
+  background-color: #ff4013;
+  color: white;
+}
+
+.paginator-container button {
+  color: black;
+  background-color: white;
+  margin: 0 5px;
+  border: none;
+  box-shadow: none;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.place-card {
+  border: 1px solid #ddd;
+  max-height: 300px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.2s;
+  width: 75%;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.place-card:hover {
+  border: 5px solid #ff4013;
+  border-radius: 10px;
+}
+
+.card-content {
+  display: flex;
+  max-height: 200px;
+  align-items: center;
+}
+
+.card-image img {
+  width: 220px;
+  height: 200px;  /* Adjust this value to change the height of the images */
+  object-fit: cover;
+  border-radius: 10px;
+}
+.card-details {
+  flex-grow: 1;
+  padding-left: 20px;
+  
+}
+.delete-button {
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: red;
+  color: white;
+}
+.row{
+  margin-left: 250px;
+}
+  
+.star{
+  color: #ff4013;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-top: -20px;
+}
+
+.rating span {
+  margin-left: 10px;
+}
+.reviews-button {
+  margin-top: auto;
+  
+}
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px;
+  padding-right: 40px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-bar input[type="text"]:focus {
+  outline: none;
+  border-color: #ff4013;
+}
+
+.search-bar i.fa-search {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #ccc;
+}
+
+.search-sort-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: min-content;
+  width: 70%;
+  margin-bottom: 20px;
+}
+.category-badge {
+  display: inline-block;
+  padding: 5px;
+  font-size: small;
+  margin: 2px;
+  border-radius: 10px;
+  color: black;
+  background-color: #ffe6d5;
+  border: 1px solid #ff704d;
+  margin-bottom: 10px;
+}
+
+.categories button {
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid white;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.categories button.active {
+  background-color: #ff4013;
+  color: white;
+}
+
+.categories button:hover {
+  border: 2px solid #ff4013;
+}
+
+.categories button:active {
+  background-color: #ced4da;
+}
+
+.sorting {
+  width: 100%;
+  max-width: 162px;
+  margin-bottom: 20px;
+  margin-left: 5px; 
+}
+.sorting:focus {
+  outline: none;
+  border-color: #ff4013;
+}
+
+.sorting select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}

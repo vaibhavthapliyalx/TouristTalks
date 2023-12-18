@@ -1,0 +1,51 @@
+<div class="reviews-container" *ngIf="reviews.length > 0; else noReviews">
+    <mat-card *ngFor="let review of reviews" class="review-card">
+      <div class="review-header">
+        <img *ngIf="reviewType === 'myReviews'" class="reviewer-photo" [src]="'../../assets/'+ reviewer.profilePhoto" alt="Reviewer Photo">
+        <img *ngIf="reviewType === 'likedReviews'" class="reviewer-photo" [src]="'../../assets/'+ review.user?.profilePhoto" alt="Reviewer Photo">
+        <div>
+          <mat-card-title *ngIf="reviewType === 'myReviews'">
+            You reviewed <mat-icon class="reviewed-text">location_on</mat-icon>
+              <span class="reviewed-text">{{ review.place_name }}</span>
+             
+          </mat-card-title>
+          <mat-card-title *ngIf="reviewType === 'likedReviews'">
+            You liked {{ review.user?.fullName }}'s review of
+            <mat-icon class="reviewed-text">location_on</mat-icon>
+              <span class="reviewed-text">{{ review.place_name }}</span>
+             
+          </mat-card-title>
+          <div class="rating">
+            <mat-icon class="star" *ngFor="let star of getStars(review.rating)">
+              {{ star === 1 ? 'star' : star === 0.5 ? 'star_half' : 'star_border' }}
+            </mat-icon>
+            <span>{{review.rating | number:'1.1-1'}}</span>
+            <mat-card-actions class="reviews-button">
+            </mat-card-actions>
+          </div>
+          <mat-card-subtitle>
+           Reviewed on  {{ review.timestamp | date:'MMM d, y' }} at {{ review.timestamp | date:'h:mm a' }} 
+          </mat-card-subtitle>
+          <span class="badge" *ngIf="review.edited">Edited</span>
+        </div>
+      </div>
+      <mat-card-content>
+        <p>{{ review.text }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="toggleLike(review)">
+          <mat-icon [style.color]="review.liked ? 'red' : 'black'">favorite</mat-icon>
+          ({{ review.likes }})
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+  <ng-template #noReviews>
+    <div class="center-content">
+      <p *ngIf="reviewType === 'myReviews'" class="message">It appears you haven't written any reviews yet. Please visit the 'Places' section to explore locations and share your first review. We value your insights!</p>
+      <p *ngIf="reviewType === 'likedReviews'" class="message">It appears you haven't liked any reviews yet. Please visit the 'Places' section to explore locations and hit a like.</p>
+    </div>
+  </ng-template>
+  
+  

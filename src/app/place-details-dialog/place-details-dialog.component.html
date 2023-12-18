@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>{{ data.site_name }}
+  <div class="title-container">
+    <mat-icon class="close-icon" (click)="onNoClick()">close</mat-icon>
+  </div>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="place-details-container">
+    <div class="place-image-container">  
+      <img mat-card-image [src]="data.image" alt="Photo of {{data.site_name}}" onerror="this.onerror=null; this.src='../../assets/placeholder_image.svg';">
+    </div>
+    
+    <div class="place-details">
+      <p>{{ data.description }}</p>
+
+      <mat-card class="details-card">
+        <mat-card-content>
+          <p><mat-icon>article</mat-icon> Summary: {{ data.summary }}</p>
+          <p><mat-icon>star_rate</mat-icon> Rating: {{ data.rating }}</p>
+          <p><mat-icon>location_on</mat-icon> Location: Latitude: {{ data.location.latitude }}, Longitude: {{ data.location.longitude }}</p>
+          <p><mat-icon>home</mat-icon> Address: {{ data.address.address_1 }}, {{ data.address.address_2 }}, {{ data.address.address_3 }}, {{ data.address.postcode }}</p>
+          <p><mat-icon>category</mat-icon> Categories: {{ data.categories.join(', ') }}</p>
+          <p><mat-icon>label</mat-icon> Type: {{ data.type.join(', ') }}</p>
+          <p><mat-icon>local_offer</mat-icon> Tags: {{ data.tags.join(', ') }}</p>
+          <p><mat-icon>public</mat-icon> Websites: <p *ngFor="let website of data.website">
+            <a href="{{website}}" target="_blank">{{website | slice:0:30}}...</a>
+          </p>
+          <p><mat-icon>email</mat-icon> Email: {{ data.email }}</p>
+          <p><mat-icon>phone</mat-icon> Phone: {{ data.phone }}</p>
+          <p><mat-icon>info</mat-icon> UPRN: {{ data.uprn }}</p>
+          <p><mat-icon>info</mat-icon> Venue Description: {{ data.venue_description }}</p>
+          <p><mat-icon>info</mat-icon> All Weather: {{ data.all_weather }}</p>
+          <p><mat-icon>access_time</mat-icon> Opening Times: {{ data.opening_times }}</p>
+          <p><mat-icon>accessible</mat-icon> Accessibility: {{ data.accessibility }}</p>
+          <p><mat-icon>pets</mat-icon> Pet Friendly: {{ data.pet_friendly }}</p>
+          <p><mat-icon>local_parking</mat-icon> Parking: {{ data.parking }}</p>
+          <p><mat-icon>access_time</mat-icon> Visit Time: {{ data.visit_time }}</p>
+          <p><mat-icon>map</mat-icon> Google Map Link: <a [href]="data.google_map_link" target="_blank">Open Map</a></p>
+          <p><mat-icon>directions_bus</mat-icon> Nearest Bus Stop: {{ data.nearest_bus_stop }} ({{ data.walk_time_bus }} walk)</p>
+          <p><mat-icon>train</mat-icon> Nearest Train Station: {{ data.nearest_train_station }} ({{ data.walk_time_train }} walk)</p>
+          <p><mat-icon>directions</mat-icon> Directions: {{ data.directions }}</p>
+          <p><mat-icon>directions_bus</mat-icon> Nearest Bus Service: {{ data.nearest_bus_service }}</p>
+          <p><mat-icon>attach_money</mat-icon> Cost Details: {{ data.cost_details }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</mat-dialog-content>

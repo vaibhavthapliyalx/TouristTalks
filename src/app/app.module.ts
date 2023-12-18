@@ -14,13 +14,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule } from '@angular/common/http';
 import { PlacesComponent } from './places/places.component';
-import CoreConnector from './InterfaceAPI/CoreConnector';
-import { HomeComponent } from './home/home.component';
+import ApiConnector from './APIConnector/ApiConnector';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignupComponent } from './signup/signup.component';
-
-
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
+import { PlaceDetailsDialog } from './place-details-dialog/place-details-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UserReviewsComponent } from './user-reviews/user-reviews.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { AddPlacesComponent } from './add-places/add-places.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 /**
  * Proxy has been implemented to forward the requests from the frontend to the backend.
  * The proxy is configured in the file proxy.conf.json.
@@ -29,19 +41,30 @@ import { SignupComponent } from './signup/signup.component';
  * ToDo: Check with Adrian if it's okay to use the proxy.
  */
 export const routes = [
-  { path: '', component: HomeComponent },
-  { path: 'places', component: PlacesComponent },
+  { path: 'places', component: PlacesComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
-  { path: '**', redirectTo: '' }
+  { path: 'login', component: LoginComponent },
+  { path: 'places/reviews/:place_id/:site_name', component: ReviewsComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:user_id', component: ProfileComponent, canActivate: [AuthGuard] },
+  {path: 'reviews/latest', component: ReviewsComponent, canActivate: [AuthGuard] },
+  {path: 'reviews/myreviews', component: UserReviewsComponent, canActivate: [AuthGuard] },
+  {path: 'addPlaces', component: AddPlacesComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'places' }
 ];
 @NgModule({
   declarations: [
     AppComponent,
     PlacesComponent,
-    HomeComponent,
     FooterComponent,
     NavbarComponent,
     SignupComponent,
+    LoginComponent,
+    PlaceDetailsDialog,
+    ReviewsComponent,
+    ProfileComponent,
+    UserReviewsComponent,
+    AddPlacesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -57,9 +80,16 @@ export const routes = [
     ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
-    
+    MatDialogModule,
+    MatTableModule,
+    FormsModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatGridListModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
-  providers: [CoreConnector],
+  providers: [ApiConnector, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

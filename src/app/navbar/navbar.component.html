@@ -1,13 +1,16 @@
 <mat-toolbar color="primary">
-    <img src="../../assets/logo.png" class="logo">
-    <span class="spacer"></span>
-    <a mat-button *ngFor="let item of navigation" [routerLink]="item.href" [routerLinkActive]="['active']" [routerLinkActiveOptions]="item.href === '/' ? {exact: true} : {exact: false}">{{item.name}}</a>
-    <button mat-button [matMenuTriggerFor]="menu">
-      <img [src]="getProfilePhotoUri()" class="avatar">
-      {{user?.username}}
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="user" (click)="onLogout()">Logout</button>
-      <button mat-menu-item *ngIf="!user" routerLink="/login">Login</button>
-    </mat-menu>
+  <img src="../../assets/logo.png" class="logo" routerLink="/">
+  <a mat-button class="button" routerLink="/places" routerLinkActive="active"><mat-icon style="font-size: 21px;" alt="All Places">home</mat-icon></a>
+  <a mat-button class="button" routerLink="reviews/latest" routerLinkActive="active"><mat-icon style="font-size: 21px;" alt="Reviews">reviews</mat-icon></a>
+  <a *ngIf="this.user.role === 'admin'" mat-button class="button" routerLink="addPlaces" routerLinkActive="active"><mat-icon style="font-size: 21px;" alt="Add Place">add_location</mat-icon></a>
+  <span class="spacer"></span>
+  <button mat-button [matMenuTriggerFor]="menu" *ngIf="user">
+    <img [src]="photoUri" class="avatar">
+    <span class="username">{{(user.fullName || ' ').split(' ')[0]}}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngIf="user" (click)="onLogout()">Logout</button>
+    <button mat-menu-item *ngIf="user" [routerLink]="['/profile', user.id]">My Profile</button>
+    <button mat-menu-item *ngIf="!user" routerLink="/login">Login</button>
+  </mat-menu>
 </mat-toolbar>
