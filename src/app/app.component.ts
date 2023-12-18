@@ -18,8 +18,5 @@ export class AppComponent {
     const url = this.router.url;
     return url.includes('/login') || url.includes('/signup');
   }
-
-
-
 }
 
