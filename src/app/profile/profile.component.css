@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 1000px;
+  min-width: 800px;
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+mat-card-content p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-actions {
+  justify-content: flex-start;
+  gap: 10px;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: aqua;
+}
+.error-message {
+  display: flex;
+  align-items: center;
+  color: red;
+  margin-bottom: 10px;
+}
+.tabs {
+  margin-top: 20px;
+  width: 1000px;
+  min-width: 800px;
+}

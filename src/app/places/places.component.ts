@@ -1,133 +1,204 @@
 import { Component } from '@angular/core';
-import CoreConnector from '../InterfaceAPI/CoreConnector';
-
+import ApiConnector from '../APIConnector/ApiConnector';
+import { Place, User } from 'src/interface/constants';
+import { MatDialog } from '@angular/material/dialog';
+import { PlaceDetailsDialog } from '../place-details-dialog/place-details-dialog.component';
+import { getAllCategories, getStars } from 'src/utils/utilityfunctions';
 @Component({
   selector: 'app-places',
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.css']
 })
 export class PlacesComponent {
-  //ToDo: Remove this placeholder data once the Server is up and running.
-  places_list = [
-    {
-      "place_id": 1,
-      "site_name": "Burrington Combe",
-      "summary": "Fine example of a typical Mendip gorge for walking, caving and climbing",
-      "description": "Burrington Combe is a Carboniferous Limestone gorge near the village of Burrington on the north side of the Mendip Hills Area of Outstanding Natural Beauty in North Somerset England. Combe or Coombe is a word of Celtic origin found in several forms on all of the British Isles denoting a steep sided valley or hollow. Burrington Combe is a gorge though the limestone hills although there is now no river running through it. Various cave entrances are exposed which have been occupied by humans for over 1000 years with a hillfort being built beside the combe in the Iron Age. The geology has led to a diversity of plant life. According to legend Augustus Montague Toplady was inspired to write the hymn Rock of Ages while sheltering under a rock in the combe although recent scholars have disputed this claim.",
-      "location_id": 2,
-      "location": {
-        "latitude": "51.3277563366584",
-        "longitude": "-2.7523269771047"
-      },
-      "type": [
-        "Active and outdoors",
-        ""
-      ],
-      "tags": [
-        ""
-      ],
-      "address": {
-        "address_1": "Burrington Combe",
-        "address_2": "",
-        "address_3": "",
-        "postcode": ""
-      },
-      "website": [
-        "http://www.gps-routes.co.uk/routes/home.nsf/RoutesLinksWalks/burrington-combe-walking-route",
-        "http://www.mendiphillsaonb.org.uk/walks/"
-      ],
-      "email": "",
-      "phone": "",
-      "categories": [
-        "attraction",
-        "open spaces",
-        "family friendly",
-        "nature - environment"
-      ],
-      "venue_description": "",
-      "all_weather": "Outdoors",
-      "opening_times": "",
-      "accessibility": "",
-      "pet_friendly": "",
-      "parking": "",
-      "visit_time": "",
-      "uprn": 24142606,
-      "google_map_link": "https://www.google.co.uk/maps/place/@51.32775633665836,-2.7523269771047008,17z",
-      "walk_time_bus": "Less than 15 minutes",
-      "nearest_bus_stop": "134",
-      "walk_time_train": "Over 60 minutes",
-      "nearest_train_station": "Yatton Railway Station",
-      "directions": "",
-      "nearest_bus_service": "",
-      "image": "http://discovernorthsomerset.co.uk/wp-content/uploads/2017/04/118-Burrington-Combe-2.jpg",
-      "cost_free": null,
-      "cost_details": ""
-    },
-    {
-      "place_id": 2,
-      "site_name": "Theatre in the Hut",
-      "summary": "An\ufffdamateur dramatics society in  Weston super Mare in Somerset, which has been running for over 60 years.",
-      "description": "We are an amateur dramatics society with members from many different backgrounds. We put on several shows every year, mainly at the Theatre in the Hut which is owned by the Wayfarers. Members do not get paid for the shows we put on, as all proceeds from ticket sales (after payment of royalties and licenses etc) go towards the upkeep and improvement of the theatre. What we do get is a tremendous amount of satisfaction and a great social life.",
-      "location_id": 4,
-      "location": {
-        "latitude": "51.3502572387019",
-        "longitude": "-2.96309212131165"
-      },
-      "type": [
-        "Theatre",
-        ""
-      ],
-      "tags": [
-        "Weston",
-        "theatre",
-        "plays"
-      ],
-      "address": {
-        "address_1": "Theatre In The Hut",
-        "address_2": "Milton Road",
-        "address_3": "Weston-Super-Mare",
-        "postcode": ""
-      },
-      "website": [
-        "http://www.wayfarersdrama.org.uk/home/4584795664",
-        ""
-      ],
-      "email": "wayfarersdrama@outlook.com",
-      "phone": "",
-      "categories": [
-        "arts and culture",
-        "family friendly",
-        "venue for events"
-      ],
-      "venue_description": "",
-      "all_weather": "Indoors",
-      "opening_times": "",
-      "accessibility": "",
-      "pet_friendly": "",
-      "parking": "On-street parking",
-      "visit_time": "",
-      "uprn": 24097988,
-      "google_map_link": "https://www.google.co.uk/maps/place/@51.35025723870193,-2.963092121311648,17z",
-      "walk_time_bus": "Less than 15 minutes",
-      "nearest_bus_stop": "7",
-      "walk_time_train": "15 - 30 minutes",
-      "nearest_train_station": "Weston-super-Mare Railway Station",
-      "directions": "",
-      "nearest_bus_service": "",
-      "image": "http://discovernorthsomerset.co.uk/wp-content/uploads/2015/06/shutterstock_96302903.jpg",
-      "cost_free": null,
-      "cost_details": ""
-    },]
-  
-  database_status : any;
+ /**
+  * Here we are importing the getStars function from the utilityfunctions.ts file.
+  * And then pass its reference to the getStars property.
+  * This can be used in the HTML file to fetch the stars array
+  */
+  getStars = getStars;
+  isLoading = false;
+  user = {} as User;
+  places_list: Place[]= [];
+  pageSize = 20;
+  pageIndex = 0;
+  panelOpenState = false;
+  searchTerm = '';
+  selectedCategory = 'All';
+  sortEvent: Event = new Event('');
+  categories = getAllCategories();
+  activeCategories = ['All'];
+  sortOrder = 'name';
+  searchQuery = '';
+  selectedCategories:string[] =[];
 
-  constructor(private coreConnector: CoreConnector) {
+  constructor(private apiConnector: ApiConnector, public dialog: MatDialog) {
     console.log("Places Component initalised!");
   }
-  ngOnInit(): void {
-    this.coreConnector.getDatabaseConnectionStatus()
-    .then((res:any) => {
-      this.database_status = res.data;
+
+  openDialog(place: any): void {
+    const dialogRef = this.dialog.open(PlaceDetailsDialog, {
+      width: 'auto',
+      data: place
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  ngOnInit(): void {
+    this.fetchPlaces();
+    this.fetchLoggedInUser();
+  }
+
+  /**
+   * This function fetches the logged in user from the backend.
+   * 
+   * @returns  The logged in user
+   */
+  fetchLoggedInUser() {
+    this.apiConnector.getLoggedInUser()
+      .then((res: any) => {
+        this.user = res;
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }
+
+  /**
+   * This function fetches the places from the backend.
+   * It queries the backend with the sort, search, and categories parameters.
+   * If sort is provided, it sorts the places by the sort order.
+   * If search is provided, it filters the places by the search term.
+   * If categories is provided, it filters the places by the categories.
+   * If no parameters are provided, it returns all the places.
+   * 
+   * @param sort The sort order.
+   * @param search The search term.
+   * @param categories The categories to filter by.
+   */
+  fetchPlaces() {
+    // Set isLoading to true to show the loading spinner
+    this.isLoading = true;
+  
+    this.apiConnector.getAllPlaces(this.sortOrder, this.searchQuery, this.selectedCategories)
+      .then((res: any) => {
+        const places: Place[] = res;
+        // Setting showDetails to false for all places initially.
+        this.places_list = places.map(place => ({ ...place, showDetails: false }));
+        console.log(this.places_list);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      })
+      .finally(() => {
+        // Set isLoading to false to hide the loading progess bar.
+        // This is being done with a timeout of 1500ms,
+        // so that the spinner is shown for at least 1500ms.
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
+      });
+    }
+
+  search() {
+    this.searchQuery = this.searchTerm;
+
+    // Fetch the places with the search term.
+    this.fetchPlaces();
+  }
+
+  /**
+   * This function filters the places by the category.
+   * If 'All' is selected and it's the only one selected, it does nothing.
+   * If 'All' is selected and there are other categories selected, it deselects all other categories.
+   * If another category is selected and 'All' is currently selected, it deselects 'All'.
+   * If the category is already selected, it deselects the category.
+   * If the category is not selected, it selects the category.
+   * 
+   * @param category  The category to filter by
+   */
+  filterByCategory(category: string) {
+    console.log("target category"+ category);
+    
+    // If 'All' is selected and it's the only one selected
+    if (category === 'All' && this.activeCategories.length === 1 ) {
+      // Do nothing
+    }
+    // If 'All' is selected and there are other categories selected
+    if (category === 'All' && this.activeCategories.length > 1) {
+      this.activeCategories = ['All']; // Deselect all other categories
+    }
+    // If another category is selected and 'All' is currently selected
+    else if (this.activeCategories.includes('All')) {
+      this.activeCategories = [category]; // Deselect 'All'
+    }
+    // If the category is already selected
+    else if (this.activeCategories.includes(category)) {
+      this.activeCategories.splice(this.activeCategories.indexOf(category), 1); // Deselect the category
+    }
+    // If the category is not selected
+    else {
+      this.activeCategories.push(category); // Select the category
+    }
+    this.selectedCategory = category;
+    if (this.activeCategories.length === 0) {
+      this.activeCategories = ['All'];
+    }
+    this.selectedCategories = this.activeCategories;
+    console.log("active categories"+ this.activeCategories);
+    // After filtering fetch the filtered places
+    if (this.activeCategories.includes('All')){
+    this.selectedCategories = this.categories.filter(category => category !== 'All');
+    }
+    
+    // Fetch the filtered places.
+    this.fetchPlaces();
+  }
+
+  sortBy(event: Event) {
+    const criterion = (event.target as HTMLSelectElement).value;
+    this.sortOrder = criterion;
+
+    // Fetch the sorted places.
+    this.fetchPlaces();
+  }
+
+  deletePlace(placeId: number) {
+    console.log("Delete place with id: " + placeId);
+    this.apiConnector.deletePlace(placeId)
+      .then((res: any) => {
+        console.log(res);
+        this.fetchPlaces();
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }
+
+
+  /********************** Pagination Handlers **********************/
+  get lastPageIndex() {
+    return Math.ceil(this.places_list.length / this.pageSize) - 1;
+  }
+
+  get pagesArray() {
+    return Array.from({length: this.lastPageIndex + 1}, (_, i) => i + 1);
+  }
+
+  goToPreviousPage() {
+    if (this.pageIndex > 0) {
+      this.pageIndex--;
+    }
+  }
+
+  goToNextPage() {
+    if (this.pageIndex < this.lastPageIndex) {
+      this.pageIndex++;
+    }
+  }
+
+  goToPage(pageIndex: number) {
+    this.pageIndex = pageIndex;
   }
 }

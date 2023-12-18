@@ -1,0 +1,250 @@
+<mat-progress-bar  mode="indeterminate" color="warn" *ngIf="isLoading"/>
+<div class="container">
+  <h1 class="place-heading">Add a new place</h1>
+  <p class="intro-text">You have the rights to add and delete places. Please ensure the data you're entering is correct.</p>
+  <p class="intro-text">To add a new place, please click on the plus icon below.</p>
+  <button  mat-fab (click)="showForm()" class="add-place-button">
+    <mat-icon>add</mat-icon>
+  </button>
+ 
+  <mat-card *ngIf="showPlaceForm" class="place-card">
+      <form [formGroup]="placeForm" class="form-container">
+        <mat-card-content>
+        <!-- Site Name -->
+        <mat-form-field class="full-width">
+          <mat-label>Place Name</mat-label>
+          <input matInput formControlName="site_name" placeholder="Place name goes here.." required>
+          <mat-error *ngIf="placeForm.get('site_name')?.hasError('required')">Place Name is required</mat-error>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field class="full-width">
+          <mat-label>Place Description</mat-label>
+          <textarea matInput formControlName="description" placeholder="Place description goes here.."></textarea>
+        </mat-form-field>
+
+        <!-- Summary -->
+        <mat-form-field class="full-width">
+          <mat-label>Summary</mat-label>
+          <textarea matInput formControlName="summary"></textarea>
+        </mat-form-field>
+
+        <!-- Location -->
+        <div formGroupName="location">
+          <mat-form-field>
+            <mat-label>Latitude</mat-label>
+            <input matInput formControlName="latitude">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Longitude</mat-label>
+            <input matInput formControlName="longitude">
+          </mat-form-field>
+        </div>
+
+        <!-- Type -->
+        <mat-form-field class="full-width">
+          <mat-label>Type</mat-label>
+          <input matInput formControlName="type" placeholder="Enter types separated by commas">
+        </mat-form-field>
+        
+        <!-- Tags -->
+        <mat-form-field class="full-width">
+          <mat-label>Tags</mat-label>
+          <input matInput formControlName="tags" placeholder="Enter tags separated by commas">
+        </mat-form-field>
+
+        <!-- Address -->
+        <div formGroupName="address">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address_1" placeholder="Address line 1">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Address 2</mat-label>
+            <input matInput formControlName="address_2" placeholder="Address line 2">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Address 3</mat-label>
+            <input matInput formControlName="address_3" placeholder="Address line 3">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Postcode</mat-label>
+            <input matInput formControlName="postcode" placeholder="Postcode">
+          </mat-form-field>
+        </div>
+
+        <!-- Website -->
+        <mat-form-field class="full-width">
+          <mat-label>Website</mat-label>
+          <input matInput placeholder="Add website" #websiteInput (keyup.enter)="addWebsite(websiteInput)">
+        </mat-form-field>
+        
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let site of placeForm.get('website')?.value">
+            <a [href]="site" target="_blank">{{ site }}</a>
+            <mat-icon matChipRemove (click)="removeWebsite(site)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-listbox>
+
+        <!-- Email -->
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+
+        <!-- Phone -->
+        <mat-form-field class="full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+
+        <!-- Categories -->
+        <mat-form-field class="full-width">
+          <mat-label>Categories</mat-label>
+          <mat-chip-listbox #chipList>
+            <mat-chip *ngFor="let category of getCategoriesFormControls(); let i = index" [removable]="true" (removed)="removeCategory(i)">
+              {{category.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input matInput placeholder="New category..." [matAutocomplete]="auto"
+               (matChipInputTokenEnd)="addCategory($event)">
+          </mat-chip-listbox>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCategory($event)">
+            <mat-option *ngFor="let category of availableCategories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Venue Description -->
+        <mat-form-field class="full-width">
+          <mat-label>Venue Description</mat-label>
+          <textarea matInput formControlName="venue_description"></textarea>
+        </mat-form-field>
+
+        <!-- All Weather -->
+        <mat-form-field class="full-width">
+          <mat-label>All Weather</mat-label>
+          <input matInput formControlName="all_weather">
+        </mat-form-field>
+
+        <!-- Opening Times -->
+        <mat-form-field class="full-width">
+          <mat-label>Opening Times</mat-label>
+          <input matInput formControlName="opening_times">
+        </mat-form-field>
+
+        <!-- Accessibility -->
+        <mat-form-field class="full-width">
+          <mat-label>Accessibility</mat-label>
+          <input matInput formControlName="accessibility">
+        </mat-form-field>
+
+        <!-- Pet Friendly -->
+        <mat-form-field class="full-width">
+          <mat-label>Pet Friendly</mat-label>
+          <input matInput formControlName="pet_friendly">
+        </mat-form-field>
+
+        <!-- Parking -->
+        <mat-form-field class="full-width">
+          <mat-label>Parking</mat-label>
+          <input matInput formControlName="parking">
+        </mat-form-field>
+
+        <!-- Visit Time -->
+        <mat-form-field class="full-width">
+          <mat-label>Visit Time</mat-label>
+          <input matInput formControlName="visit_time">
+        </mat-form-field>
+
+        <!-- UPRN -->
+        <mat-form-field class="full-width">
+          <mat-label>UPRN</mat-label>
+          <input matInput formControlName="uprn">
+        </mat-form-field>
+
+        <!-- Google Map Link -->
+        <mat-form-field class="full-width">
+          <mat-label>Google Map Link</mat-label>
+          <input matInput formControlName="google_map_link">
+        </mat-form-field>
+
+        <!-- Walk Time Bus -->
+        <mat-form-field class="full-width">
+          <mat-label>Walk Time Bus</mat-label>
+          <input matInput formControlName="walk_time_bus">
+        </mat-form-field>
+
+        <!-- Nearest Bus Stop -->
+        <mat-form-field class="full-width">
+          <mat-label>Nearest Bus Stop</mat-label>
+          <input matInput formControlName="nearest_bus_stop">
+        </mat-form-field>
+
+        <!-- Walk Time Train -->
+        <mat-form-field class="full-width">
+          <mat-label>Walk Time Train</mat-label>
+          <input matInput formControlName="walk_time_train">
+        </mat-form-field>
+
+        <!-- Nearest Train Station -->
+        <mat-form-field class="full-width">
+          <mat-label>Nearest Train Station</mat-label>
+          <input matInput formControlName="nearest_train_station">
+        </mat-form-field>
+
+        <!-- Directions -->
+        <mat-form-field class="full-width">
+          <mat-label>Directions</mat-label>
+          <textarea matInput formControlName="directions"></textarea>
+        </mat-form-field>
+
+        <!-- Nearest Bus Service -->
+        <mat-form-field class="full-width">
+          <mat-label>Nearest Bus Service</mat-label>
+          <input matInput formControlName="nearest_bus_service">
+        </mat-form-field>
+
+        <!-- Image -->
+        <mat-form-field class="full-width">
+          <mat-label>Image URL</mat-label>
+          <input matInput formControlName="image" placeholder="Image URL">
+          <small class="note">Image upload feature coming soon...</small>
+        </mat-form-field>
+
+        <!-- Cost Free -->
+      
+          <mat-form-field class="full-width">
+            <mat-label>Cost Free</mat-label>
+            <mat-select formControlName="cost_free">
+              <mat-option value="true">Yes</mat-option>
+              <mat-option value="false">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+
+        <!-- Cost Details -->
+        <mat-form-field class="full-width">
+          <mat-label>Cost Details</mat-label>
+          <input matInput formControlName="cost_details">
+        </mat-form-field>
+
+        <!-- Rating -->
+        <mat-form-field class="full-width">
+          <mat-label>Rating</mat-label>
+          <input matInput formControlName="rating">
+        </mat-form-field>
+
+      </mat-card-content>
+        <mat-card-actions>
+          <button type="button" mat-icon-button color="primary" (click)="onSubmit()" [disabled]="!placeForm.valid">
+            <mat-icon>check</mat-icon>
+          </button>
+          <mat-icon class="close-icon" (click)="showPlaceForm = false">close</mat-icon>
+        </mat-card-actions>
+    </form>
+  </mat-card>
+  <p class="success-message" *ngIf="placeAdded"><i class="bi bi-check-circle"></i><span>{{'  '}}</span><strong>Success:</strong><span>{{'  '}}</span> Redirecting to places page in {{countdown}}</p>
+  <p class="error-message" *ngIf="placeError"><i class="bi bi-x-circle"></i><span>{{'  '}}</span><strong>Error:</strong><span>{{'  '}}</span> {{ placeError }}</p>
+</div>

@@ -1,22 +1,68 @@
+<mat-progress-bar  mode="indeterminate" color="warn" *ngIf="isLoading"/>
 <div class="container mt-5">
-    <h2 class="text-center mb-3">Places Directory</h2>
-
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Place</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Rating</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let place of places_list">
-                    <td>{{place.site_name}}</td>
-                    <td>{{place.address.address_1}}, {{place.address.address_2}}, {{place.address.address_3}}, {{place.address.postcode}}</td>
-                    <td>{{'N/A'}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="search-sort-bar">
+      <div class="search-bar">
+        <input type="text" [(ngModel)]="searchTerm" (input)="search()" placeholder="What are you looking for ?"/>
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="sorting">
+        <select (change)="sortBy($event)">
+          <option value="">Apply filters</option>
+          <option value="site_name">Name (A-Z)</option>
+          <option value="rating">Rating (high-low)</option>
+        </select>
+      </div>
     </div>
+     <!-- Add these categories/tags -->
+     <div class="categories">
+      <button *ngFor="let category of categories" 
+              [class.active]="activeCategories.includes(category)" 
+              (click)="filterByCategory(category)">{{ category }}</button>
+    </div>
+    <div class="card-container">
+        <div class="row" *ngIf="!isLoading">
+            <div class="col-12" *ngFor="let place of places_list.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)">
+                <mat-card (click)="openDialog(place)" class="place-card">
+                    <div class="card-content">
+                       <!-- Placeholder image downloaded from :https://commons.wikimedia.org/wiki/File:No-Image-Placeholder.svg-->
+                        <div class="card-image">
+                            <img mat-card-image [src]="place.image" alt="Photo of {{place.site_name}}" onerror="this.onerror=null; this.src='../../assets/placeholder_image.svg';">
+                          </div>
+                        <div class="card-details">
+                            <h2>{{place.site_name}}</h2>
+                            <div class="rating">
+                                <mat-icon class="star" *ngFor="let star of getStars(place.rating)">
+                                  {{ star === 1 ? 'star' : star === 0.5 ? 'star_half' : 'star_border' }}
+                                </mat-icon>
+                                <span>Rating: {{place.rating | number:'1.1-1'}}</span>
+                                <mat-card-actions class="reviews-button">
+                                  <!--This event.stopPropagation() is used here to prevent event bubbling, where if you click on this button
+                                  the event would trigger for the container as well -->
+                                  <button mat-button [routerLink]="['/places/reviews', place.place_id, place.site_name]" (click)="$event.stopPropagation()">
+                                    <mat-icon>rate_review</mat-icon> See All Reviews
+                                  </button>
+                                </mat-card-actions>
+                              </div>
+                              <span class="category-badge" *ngFor="let category of place.categories">{{ category }}</span>
+                            <p>{{place.summary | slice:0:100}}{{place.summary.length > 100 ? "...": ""}}</p>
+                          </div>
+                          <button mat-icon-button class="delete-button" *ngIf="user.role === 'admin'" (click)="$event.stopPropagation(); deletePlace(place.place_id)">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                    </div>
+                    
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="paginator-container">
+        <button mat-icon-button (click)="goToPreviousPage()" [disabled]="pageIndex === 0">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" *ngFor="let page of pagesArray" (click)="goToPage(page - 1)" [class.active]="pageIndex === page - 1">{{ page }}</button>
+        <button mat-icon-button (click)="goToNextPage()" [disabled]="pageIndex >= lastPageIndex">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
 </div>
