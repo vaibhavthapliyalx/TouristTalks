@@ -43,5 +43,4 @@ export class FooterComponent {
       console.log(err);
     });
   }
-
 }
