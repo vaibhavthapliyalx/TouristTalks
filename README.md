@@ -1,27 +1,87 @@
-# Angular
+# Tourist Talks
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+![Tourist Talks Logo](/src/assets/logo.png)
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Welcome to Tourist Talks, a captivating platform designed to enrich your tourism experience. This application allows users to explore and review various businesses and attractions. The dataset, adapted from the Gov.uk website, provides valuable information about approximately 124 tourist attractions, including their location and reviews.
 
-## Code scaffolding
+## Dataset Source
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Adapted from [Gov.uk Website](https://www.data.gov.uk/dataset/b8051901-5978-43bd-bee4-c0a473794ee5/sites-and-attractions)
 
-## Build
+## Functionality
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Onboarding (Stretch Goal)
 
-## Running unit tests
+New users will undergo an onboarding process where they can create their account, choose a username, and optionally upload a profile photo.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Feed Section
 
-## Running end-to-end tests
+Explore recent reviews in a paginated interface, sorted by the most recent reviews for a seamless navigation experience.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Search
 
-## Further help
+Utilize the search bar to find tourist places based on categories, tags, or names.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Tourist Attractions
+
+Each attraction features a comprehensive table with information such as location, opening times, description, and more.
+
+### User Interaction (Stretch Goal)
+
+Authenticated users can like/dislike reviews and perform the following actions:
+
+- **Add a Review:** Share your experience by adding a new review.
+- **Edit Review:** Modify your existing reviews for accuracy.
+- **Delete Review:** Remove reviews that are no longer relevant.
+- **List New Attraction (Stretch Goal):** Contribute by adding details of a new tourist attraction.
+- **Delete Listing (Stretch Goal):** Remove listings that are no longer valid.
+
+## Tech Stack
+
+- **Frontend:** Angular
+- **Backend:** Python with Flask
+- **Database:** MongoDB
+- **Authentication:** JSON Web Tokens (JWT)
+- **Testing:** Pytest
+- **Linting:** Eslint
+
+## Development Tools
+
+- **API Testing:** Postman
+- **Server Communication:** Axios
+
+## How to Run Locally
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/your-username/tourist_talks.git
+    cd tourist-talks
+    ```
+
+2. Install dependencies for both frontend and backend:
+
+    ```bash
+    npm install
+    cd api && pip install -r requirements.txt
+    ```
+
+3. Run both servers concurrently:
+
+    ```bash
+    npm run dev
+    ```
+
+Visit [http://localhost:3000](http://localhost:3000) to explore the application.
+
+## Deployment
+
+Tourist Talks is hosted on [Your Hosting Platform]. Visit [Tourist Talks Live](https://tourist-talks.live) to experience the live application.
+
+## Disclaimer
+
+This project, Tourist Talks, is intended for reference purposes only. It is not to be copied, and all code belongs to the original author. No warranty is provided, and it is solely for educational and reference purposes.
+
+Feel free to customize or enhance the README as needed.
