@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng build --prod\" \"cd api && FLASK_APP=index.py flask run --host=0.0.0.0 --port=5000\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
