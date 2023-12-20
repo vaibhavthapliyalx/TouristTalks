@@ -2,6 +2,7 @@
   "name": "tourist_talks",
   "version": "1.0.0",
   "scripts": {
+    "vercel-build": "npm run dev",
     "ng": "ng",
     "start": "concurrently \"ng build \" \"cd api && FLASK_APP=index.py flask run --host=0.0.0.0 --port=5000\"",
     "build": "ng build",
