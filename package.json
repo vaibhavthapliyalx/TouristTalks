@@ -2,7 +2,7 @@
   "name": "tourist_talks",
   "version": "1.0.0",
   "scripts": {
-    "vercel-build": "npm run dev",
+    "vercel-build": "npm run start",
     "ng": "ng",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
