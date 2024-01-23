@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "dev": "concurrently \"ng serve --proxy-config proxy.conf.json --port 3000\" \"cd api && FLASK_APP=index.py flask run --port=5001\""
+    "start": "concurrently \"ng serve --proxy-config proxy.conf.json --port 3000\" \"cd api && FLASK_APP=index.py flask run --port=5001\""
   },
   "private": true,
   "dependencies": {
