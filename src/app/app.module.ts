@@ -70,7 +70,7 @@ export const routes = [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
