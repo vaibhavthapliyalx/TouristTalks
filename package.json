@@ -7,7 +7,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "dev": "npm install && concurrently \"ng serve --proxy-config proxy.conf.json --port 3000\" \"cd api && FLASK_APP=index.py flask run --port=5001 --host=0.0.0.0\""
+    "dev": "npm install && concurrently \"ng serve --proxy-config proxy.conf.json --port 3000\" \"cd api && FLASK_APP=index.py flask run --port=5001 --host=0.0.0.0\"",
     "start": "npm install && concurrently \"ng serve --proxy-config proxy.conf.json --port 3000\" \"cd api && FLASK_APP=index.py flask run --port=5001 --host=0.0.0.0\""
   },
   "private": true,
