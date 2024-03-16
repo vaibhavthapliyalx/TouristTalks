@@ -78,7 +78,7 @@ Visit [http://localhost:3000](http://localhost:3000) to explore the application.
 
 ## Deployment
 
-Tourist Talks is hosted on [Your Hosting Platform]. Visit [Tourist Talks Live](https://tourist-talks.live) to experience the live application.
+Tourist Talks is hosted on Vercel. Visit [Tourist Talks Live](https://tourist-talks.vercel.app) to experience the live application.
 
 ## Disclaimer
 
