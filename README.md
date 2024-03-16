@@ -57,7 +57,7 @@ Authenticated users can like/dislike reviews and perform the following actions:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/tourist_talks.git
+    git clone https://github.com/vaibhavthapliyalx/tourist_talks.git
     cd tourist-talks
     ```
 
