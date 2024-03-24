@@ -4,15 +4,32 @@ on: push
 
 jobs:
   automated-api-tests:
-    runs-on: windows-latest
-    env: ${{ secrets.MONGO_URI}}
+    runs-on: ubuntu-latest
+    env: 
+      MONGO_URI: ${{ secrets.MONGO_URI }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
+      - name: Install UI dependencies
+        run: npm install
+
+      - name: Install Backend Dependencies
+        run:  pip install -r requirements.txt
+        
+      - name: Run application in development mode in the background
+        run: nohup npm run dev > output.log 2>&1 &
+      
+      - name: Export server logs
+        run: cat output.log
+      
+      - name: Wait for application to boot. (8s)
+        run: sleep 8
+  
       - name: Install Postman CLI
         run: |
-          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      - name: Run Backend API tests
+      - name: Run API tests
         run: |
           postman collection run "30462678-3ecc543b-9f9f-4408-94ae-6fb5ee7d6b95"
