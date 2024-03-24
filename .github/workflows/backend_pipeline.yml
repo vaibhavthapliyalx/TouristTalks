@@ -5,7 +5,8 @@ on: push
 jobs:
   automated-api-tests:
     runs-on: windows-latest
-    env: ${{ secrets.MONGO_URI}}
+    env: 
+      ${{ secrets.MONGO_URI }}
     steps:
       - uses: actions/checkout@v3
       - name: Install Postman CLI
