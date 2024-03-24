@@ -14,7 +14,7 @@ jobs:
         run: npm install
 
       - name: Install Backend Dependencies
-        run: cd api && pip install -r requirements.txt
+        run:  pip install -r requirements.txt
         
       - name: Run application in development mode in the background
         run: nohup npm run dev > output.log 2>&1 &
